@@ -242,17 +242,11 @@
       var screen = 'home';
       var hosted = new URLSearchParams(location.search).get('host') === '1';
 
-      function today() {
-        var d = new Date();
-        return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-      }
-      function csHidden() {
-        try { return localStorage.getItem('rb-newbie-cs-v3') === today(); } catch (e) { return false; }
-      }
+      var csClosed = false;
       function paintCs() {
         var bar = document.getElementById('cs');
         if (!bar) return;
-        bar.hidden = csHidden();
+        bar.hidden = csClosed;
       }
       function toast(msg) {
         var old = document.querySelector('.toast');
@@ -570,9 +564,9 @@
         });
       };
       document.getElementById('csHide').onclick = function () {
-        try { localStorage.setItem('rb-newbie-cs-v3', today()); } catch (e) {}
+        csClosed = true;
         paintCs();
-        toast('今天不再显示，明天会再出现');
+        toast('已关闭，刷新页面后会再出现');
       };
       paintCs();
       var preset = new URLSearchParams(location.search).get('scene') || 'step1';
