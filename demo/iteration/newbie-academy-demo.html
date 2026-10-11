@@ -247,12 +247,12 @@
         return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       }
       function csHidden() {
-        try { return localStorage.getItem('rb-newbie-cs-v2') === today(); } catch (e) { return false; }
+        try { return localStorage.getItem('rb-newbie-cs-v3') === today(); } catch (e) { return false; }
       }
       function paintCs() {
         var bar = document.getElementById('cs');
         if (!bar) return;
-        bar.hidden = csHidden() || screen !== 'home' || state.stage !== 0;
+        bar.hidden = csHidden();
       }
       function toast(msg) {
         var old = document.querySelector('.toast');
@@ -570,7 +570,7 @@
         });
       };
       document.getElementById('csHide').onclick = function () {
-        try { localStorage.setItem('rb-newbie-cs-v2', today()); } catch (e) {}
+        try { localStorage.setItem('rb-newbie-cs-v3', today()); } catch (e) {}
         paintCs();
         toast('今天不再显示，明天会再出现');
       };

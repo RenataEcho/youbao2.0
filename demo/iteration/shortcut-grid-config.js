@@ -180,7 +180,7 @@
     host.style.cssText = 'position:absolute;inset:0;z-index:4000;background:#f6f7f9;';
     var frame = document.createElement('iframe');
     frame.title = '新手学院';
-    frame.src = 'newbie-academy-demo.html?scene=step1&host=1&v=14';
+    frame.src = 'newbie-academy-demo.html?scene=step1&host=1&v=15';
     frame.style.cssText = 'width:100%;height:100%;border:0;display:block;background:#f6f7f9;';
     host.appendChild(frame);
     if (getComputedStyle(phone).position === 'static') phone.style.position = 'relative';
