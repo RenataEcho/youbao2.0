@@ -14,12 +14,12 @@
     body { font: 14px/1.6 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; color: var(--text); }
     button, textarea, input { font: inherit; color: inherit; }
     button { cursor: pointer; }
-    #app { height: 100%; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
+    #app { position: relative; height: 100%; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
     header { flex: none; display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 8px 14px; background: var(--paper); }
     header strong { font-size: 17px; font-weight: 600; }
     .quiet { border: 0; background: none; color: var(--sub); padding: 8px 0; font-size: 13px; }
     .text-btn { color: var(--brand); font-weight: 600; padding: 8px 0 0; }
-    #view { flex: 1; min-height: 0; overflow-y: auto; padding: 0 16px 18px; }
+    #view { flex: 1; min-height: 0; overflow-y: auto; padding: 0 16px 108px; }
     h2 { font-size: 22px; line-height: 1.35; margin: 8px 0; font-weight: 650; letter-spacing: -.4px; }
     h3 { margin: 0; font-size: 16px; font-weight: 600; }
     p { margin: 6px 0; color: var(--sub); font-size: 12px; }
@@ -99,13 +99,16 @@
     .rich-fire { display: grid; place-items: center; width: 15px; height: 15px; border-radius: 50%; background: #edeff3; color: #9ca3ad; font-size: 11px; }
     .demo-note { font-size: 10px; color: var(--sub); margin: 10px 0; }
     .secondary-link { display: block; margin: 10px auto 0; padding: 8px; color: var(--sub); background: none; border: 0; }
-    .single-material { display: flex; gap: 11px; align-items: center; padding: 4px 0 8px; }
-    .single-cover { width: 67px; min-height: 99px; flex: none; background: var(--soft); border-radius: 8px; color: var(--brand); padding: 7px; display: flex; flex-direction: column; justify-content: space-between; }
-    .single-cover small { font-size: 10px; }
-    .single-cover strong { font-size: 15px; font-weight: 500; line-height: 1.25; }
-    .single-material > div { min-width: 0; flex: 1; }
-    .single-material > div > strong { font-size: 13px; font-weight: 600; }
-    .single-material p { font-size: 12px; margin: 4px 0; }
+    .ms-card { display: flex; gap: 10px; align-items: center; margin: 2px 0 14px; padding: 10px; border: 1px solid #eef0f3; border-radius: 12px; background: #fbfcfd; }
+    .ms-book { width: 58px; height: 78px; flex: none; border-radius: 4px; padding: 6px 3px 4px; display: flex; flex-direction: column; justify-content: space-between; text-align: center; color: #f4e7c8; background: linear-gradient(180deg, #2a3d62 0%, #1b2946 72%, #152033 100%); box-shadow: 0 2px 5px rgba(21, 32, 51, .16); overflow: hidden; }
+    .ms-book small, .ms-book em { font-style: normal; font-size: 7px; line-height: 1.15; letter-spacing: 0; opacity: .82; white-space: nowrap; }
+    .ms-book strong { font-size: 12px; font-weight: 650; line-height: 1.15; color: #f7edd6; white-space: nowrap; }
+    .ms-info { min-width: 0; flex: 1; }
+    .ms-info > small { display: block; font-size: 11px; color: #9aa0aa; }
+    .ms-info > strong { display: block; margin: 2px 0 6px; font-size: 16px; font-weight: 650; line-height: 1.25; }
+    .ms-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ms-pills span { font-size: 11px; color: #8b919c; background: #f2f3f5; border-radius: 5px; padding: 2px 6px; }
+    .ms-info p { margin: 6px 0 0; font-size: 12px; color: #8b919c; }
     .own-guide { padding: 14px; background: var(--bg); border-radius: 12px; margin: 12px 0; }
     .own-guide p { margin: 4px 0; }
     .publish-list { padding: 4px 0; margin: 8px 0 12px; }
@@ -119,6 +122,13 @@
     .focus-card h2 { font-size: 22px; letter-spacing: -.3px; margin: 0 0 8px; }
     .focus-label { font-size: 11px; color: var(--brand); margin-bottom: 8px; font-weight: 600; }
     .focus-card .primary { margin-top: 4px; }
+    .kw-lead { margin: 8px 0 14px; font-size: 13px; line-height: 1.7; color: #8b919c; }
+    .kw-lead b { color: #3a4150; font-weight: 650; }
+    .kw-point { display: flex; gap: 10px; align-items: flex-start; background: #fff4e8; border-radius: 12px; padding: 14px 12px; }
+    .kw-tick { width: 22px; height: 22px; flex: none; margin-top: 1px; border-radius: 50%; background: #ffe1cf; color: #fa6034; display: grid; place-items: center; font-size: 13px; font-weight: 700; }
+    .kw-point strong { display: block; font-size: 14px; font-weight: 650; color: #c24b28; line-height: 1.45; }
+    .kw-point small { display: block; margin-top: 4px; font-size: 12px; color: #9aa0aa; line-height: 1.45; }
+    .focus-card .kw-point + .primary { margin-top: 18px; }
     .focus-card .switch button { background: var(--bg); }
     .focus-card .tiles { margin-top: 12px; }
     .focus-footnote { font-size: 10px; color: var(--sub); text-align: center; margin: 16px 0 0; }
@@ -156,15 +166,24 @@
     .pair { display: flex; gap: 8px; margin-top: 12px; }
     .pair .outline { flex: 1; }
     .pair .primary { flex: 1.4; }
-    #cs { flex: none; display: flex; align-items: center; gap: 10px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: var(--paper); border-top: 1px solid var(--line); }
+    #cs { position: fixed; left: 12px; right: 12px; bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 40; padding-top: 10px; width: auto; max-width: 390px; margin: 0 auto; }
     #cs[hidden] { display: none; }
+    .cs-card { position: relative; display: flex; align-items: center; gap: 10px; padding: 12px; background: #fff4e8; border-radius: 16px; box-shadow: 0 8px 22px rgba(255, 122, 64, .14), 0 1px 3px rgba(40, 24, 12, .05); }
+    .cs-icon { width: 40px; height: 40px; flex: none; border-radius: 50%; background: var(--brand); display: grid; place-items: center; }
+    .cs-copy { flex: 1; min-width: 0; text-align: left; }
+    .cs-copy strong { display: block; font-size: 14px; font-weight: 700; line-height: 1.25; color: #2b3038; }
+    .cs-copy small { display: block; margin-top: 3px; color: #8e95a1; font-size: 11px; line-height: 1.35; }
+    .cs-cta { flex: none; border: 0; background: var(--brand); color: #fff; border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+    .cs-x { position: absolute; top: -9px; right: 2px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; background: #fff; color: #b0b6c0; font-size: 14px; line-height: 18px; box-shadow: 0 1px 4px rgba(20, 24, 32, .16); }
     .qr { width: 46px; height: 46px; flex: none; border: 1px dashed var(--sub); border-radius: 6px; display: grid; place-items: center; text-align: center; font-size: 10px; line-height: 1.25; color: var(--sub); background: var(--bg); }
     .qr.lg { width: 148px; height: 148px; margin: 12px auto; font-size: 13px; }
-    #cs .txt { flex: 1; min-width: 0; border: 0; background: none; text-align: left; padding: 0; display: flex; align-items: center; gap: 10px; }
-    #cs .txt > span:last-child { display: flex; flex-direction: column; min-width: 0; }
-    #cs .txt strong { display: block; font-size: 13px; }
-    #cs .txt small { color: var(--sub); font-size: 11px; }
-    .x { width: 28px; height: 28px; border: 0; border-radius: 50%; background: var(--bg); color: var(--sub); font-size: 18px; }
+    dialog.cs-dialog { text-align: center; padding: 26px 20px 18px; border-radius: 22px; }
+    dialog.cs-dialog h3 { font-size: 18px; font-weight: 700; }
+    dialog.cs-dialog .cs-lead { margin: 8px 0 18px; font-size: 13px; color: #8d95a6; }
+    .cs-qr-frame { width: 196px; margin: 0 auto; padding: 12px; border: 1px solid #e8ebf0; border-radius: 16px; background: #f7f8fa; }
+    .cs-qr-frame svg, .cs-qr-frame img { width: 168px; height: 168px; display: block; }
+    .cs-qr-note { margin: 14px 0 16px; font-size: 12px; color: #a4aab6; }
+    dialog.cs-dialog .primary { border-radius: 12px; padding: 13px; font-size: 16px; }
     dialog { border: 0; border-radius: 18px; padding: 20px; width: min(320px, calc(100% - 36px)); max-height: calc(100% - 48px); overflow: auto; background: var(--paper); color: var(--text); }
     dialog .rule { white-space: pre-wrap; color: var(--text); font-size: 13px; line-height: 1.55; margin: 8px 0 14px; }
     dialog::backdrop { background: rgba(0, 0, 0, .45); }
@@ -184,11 +203,22 @@
     </header>
     <main id="view"></main>
     <div id="cs">
-      <button class="txt" id="csOpen" type="button">
-        <span class="qr">客服<br>二维码</span>
-        <span><strong>第一次做项目？客服陪你上手</strong><small>领词、下载、发布有疑问，扫码咨询</small></span>
-      </button>
-      <button class="x" id="csHide" type="button" aria-label="关闭客服栏">×</button>
+      <div class="cs-card">
+        <button class="cs-x" id="csHide" type="button" aria-label="关闭客服栏">×</button>
+        <span class="cs-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" d="M4.8 12.2V11a7.2 7.2 0 0 1 14.4 0v1.2"/>
+            <rect x="3" y="11.5" width="4.2" height="6.4" rx="1.6" fill="#fff"/>
+            <rect x="16.8" y="11.5" width="4.2" height="6.4" rx="1.6" fill="#fff"/>
+            <path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M17.4 17.7c.2 1.5-1.2 2.6-3.1 2.6h-1.2"/>
+          </svg>
+        </span>
+        <span class="cs-copy">
+          <strong>新人专属配跑客服</strong>
+          <small>领词、下载、发布回填，有问题随时问</small>
+        </span>
+        <button class="cs-cta" id="csOpen" type="button">联系客服</button>
+      </div>
     </div>
   </div>
   <script>
@@ -200,7 +230,7 @@
         { title: '发布后，怎么查看收益？', line: '看懂数据更新、结算与提现', cover: '查看收益', mins: '2 分钟', tag: '', html: '<p><strong>先看数据更新说明。</strong>发布后数据通常要过一段时间才同步。</p><p><strong>预估收益和已结算不是一回事。</strong>最终入账以审核和结算结果为准。</p><p><strong>提现前看账户规则。</strong>可提现金额、账户状态以提现页说明为准。</p>' }
       ];
       var projects = [
-        { id: 'zhihu', name: '知乎故事', logo: 'assets/newbie/zhihu.png', rate: '10.5', book: '星河故事', keywords: ['星河故事726', '星河故事801'], manuscripts: ['故事悬念版', '人物冲突版'], publishReq: '1. 关键词与作品对应\n使用本次领取的关键词，内容要和这本书对应。\n\n2. 关键词使用方式\n把关键词放在标题或口播里，不要改字。\n\n3. 内容规范与发布平台\n画面清晰、不侵权。发到抖音等短视频平台后，回到右豹提交视频链接。' },
+        { id: 'zhihu', name: '知乎故事', logo: 'assets/newbie/zhihu.png', rate: '10.5', book: '星河故事', work: '星河之外', keywords: ['星河故事726', '星河故事801'], manuscripts: ['故事悬念版', '人物冲突版'], publishReq: '1. 关键词与作品对应\n使用本次领取的关键词，内容要和这本书对应。\n\n2. 关键词使用方式\n把关键词放在标题或口播里，不要改字。\n\n3. 内容规范与发布平台\n画面清晰、不侵权。发到抖音等短视频平台后，回到右豹提交视频链接。' },
         { id: 'fanqie', name: '番茄小说', logo: 'assets/newbie/fanqie.png', rate: '4', book: '番茄好书', keywords: ['番茄好书518'], manuscripts: [], publishReq: '1. 关键词与作品对应\n使用本次领取的关键词，内容要和这本书对应。\n\n2. 关键词使用方式\n口播或字幕里完整出现关键词。\n\n3. 内容规范与发布平台\n按番茄小说的内容规范制作。发到抖音等短视频平台后，回到右豹提交视频链接。' },
         { id: 'hongguo', name: '红果短剧', logo: 'assets/newbie/hongguo.png', rate: '8', book: '红果看剧', keywords: [], manuscripts: ['剧情悬念版'], publishReq: '1. 关键词与作品对应\n使用本次领取的关键词，内容要和这部剧对应。\n\n2. 关键词使用方式\n标题和口播都要带上关键词。\n\n3. 内容规范与发布平台\n保留剧情悬念，不要剧透结局。发到抖音等短视频平台后，回到右豹提交视频链接。' }
       ];
@@ -216,7 +246,7 @@
         return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       }
       function csHidden() {
-        try { return localStorage.getItem('rb-newbie-cs-day') === today(); } catch (e) { return false; }
+        try { return localStorage.getItem('rb-newbie-cs-v2') === today(); } catch (e) { return false; }
       }
       function paintCs() {
         document.getElementById('cs').hidden = csHidden();
@@ -339,12 +369,14 @@
             return '<button class="project-rich-card" type="button" data-pick="' + i + '" aria-pressed="' + on + '"><span class="rich-top"><img src="' + item.logo + '" alt=""><span class="rich-info"><strong>' + item.name + '</strong><span class="rich-tags">' + card.rates.map(function (x) { return '<span>' + x + '</span>'; }).join('') + '</span></span><span class="rich-select">' + (on ? '✓ 已选' : '选择') + '</span></span><span class="rich-stats"><span class="rich-best"><span class="rich-fire">♨</span><span>个人最高收益 <b>' + card.best + '</b></span></span></span></button>';
           }).join('') + '</div><p class="demo-note">单价和个人最高收益为示例，实际按项目规则结算。</p><button class="primary" id="confirm-project" type="button">选好了，领取关键词</button>';
         } else if (n === 1) {
-          body = '<h2>领取新手关键词</h2><div class="soft"><strong>先有关键词，才能记录你的收益</strong><p>关键词是识别订单归属的依据。<b>没有关键词，就无法记录你的订单和收益。</b>一个词只分给一个人。</p></div><button class="primary" id="claimKw" type="button">领取关键词</button>';
+          body = '<h2>领取你的专属关键词</h2><p class="kw-lead">关键词是你推广某本书或剧的<b>专属搜索词</b>。观众到对应平台搜索后，产生的有效拉新、充值等订单，会关联到你，按项目规则计算收益。</p><div class="kw-point"><span class="kw-tick" aria-hidden="true">✓</span><span><strong>关键词，是订单和收益的归属依据</strong><small>一词一人，是你的专属推广资产。</small></span></div><button class="primary" id="claimKw" type="button">领取关键词</button>';
         } else if (n === 2 && state.pickingOwn && !own) {
           body = '<h2>准备你自己的视频</h2><p>按项目要求制作，无需在这里上传。</p><div class="own-guide"><strong>发布前确认</strong><p>✓ 视频符合项目的发布要求</p><p>✓ 使用当前关键词：' + got + '</p><p>✓ 内容与推广作品对应</p></div><button class="primary" id="ownReady" type="button">稿件已准备好</button><button class="quiet secondary-link" id="useOfficial" type="button">改用官方稿件</button>';
         } else if (n === 2) {
-          var cover = cards[p.id].cover;
-          body = '<h2>领取一份稿件，直接上手</h2><p>一键代发提供成品稿件，不会剪辑也能开始。</p><div class="single-material" id="pickOfficial"><span class="single-cover"><small>官方成品</small><strong>' + cover + '</strong><small>▶ 00:38</small></span><div><strong>' + p.name + ' · 新人稿件</strong><p>一键代发 · MP4 · 38 秒</p><p>关键词：' + got + '</p></div></div><button class="primary" id="download" type="button">领取并下载稿件</button><button class="quiet secondary-link" id="pickOwn" type="button">我想使用自己的稿件 ›</button><p class="demo-note">下载为演示，不提供真实视频文件。</p>';
+          var kind = { zhihu: '故事短篇', fanqie: '小说', hongguo: '短剧' }[p.id] || '成品';
+          var work = p.work || p.book;
+          var editorName = { '故事悬念版': '小鹿剪辑', '人物冲突版': '林夏', '剧情悬念版': '阿凯' }[p.manuscripts[0]] || '小鹿剪辑';
+          body = '<h2>领取一份稿件，直接上手</h2><p class="kw-lead">一键代发专为不会剪辑的新人提供成品稿件，领取下载后即可按要求发布，支持项目允许的多个平台。</p><div class="ms-card" id="pickOfficial"><span class="ms-book"><small>' + kind + '</small><strong>' + work + '</strong><em>北豹 · 示例作品</em></span><div class="ms-info"><small>一键代发 · 成品稿件</small><strong>' + work + '</strong><span class="ms-pills"><span>视频 · MP4</span><span>28.6 MB</span></span><p>剪辑师 ' + editorName + '</p></div></div><button class="primary" id="download" type="button">领取并下载稿件</button><button class="quiet secondary-link" id="pickOwn" type="button">我想使用自己的稿件 ›</button><p class="demo-note">下载为演示，不提供真实视频文件。</p>';
         } else if (n === 3) {
           body = '<h2>去抖音发布<br>完成后回来回填</h2><p>准备' + (own ? '你制作的' : '刚下载的') + '视频，按项目要求完成发布。</p><button class="requirements-entry" id="view-requirements" type="button"><span><strong>发布前，先核对项目要求</strong><small>关键词使用方式 · 内容规范 · 发布平台</small></span><span>查看 ›</span></button><div class="publish-list"><div><span>1</span><strong>到抖音发布视频</strong></div><div><span>2</span><strong>打开已发布视频，分享并复制链接</strong></div><div><span>3</span><strong>回到右豹，提交视频链接</strong></div></div><button class="primary" id="refill" type="button">我已发布，立即回填</button>';
         } else {
@@ -429,7 +461,7 @@
           toast('次数不足，请先兑换领取次数');
           return;
         }
-        var editors = { '故事悬念版': '庭宇', '人物冲突版': '林夏', '剧情悬念版': '阿凯' };
+        var editors = { '故事悬念版': '小鹿剪辑', '人物冲突版': '林夏', '剧情悬念版': '阿凯' };
         var i = Math.floor(Math.random() * p.manuscripts.length);
         var name = p.manuscripts.splice(i, 1)[0];
         state.file[p.id] = name;
@@ -512,13 +544,28 @@
         else if (screen === 'cash') cash();
         else home();
       }
+      var DEMO_QR = '<svg viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="29" height="29" fill="#fff"/><g fill="#1a2332"><rect x="0" y="0" width="7" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="11" y="0" width="1" height="1"/><rect x="15" y="0" width="2" height="1"/><rect x="18" y="0" width="3" height="1"/><rect x="22" y="0" width="7" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="10" y="1" width="6" height="1"/><rect x="17" y="1" width="2" height="1"/><rect x="20" y="1" width="1" height="1"/><rect x="22" y="1" width="1" height="1"/><rect x="28" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="3" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="8" y="2" width="2" height="1"/><rect x="11" y="2" width="4" height="1"/><rect x="16" y="2" width="1" height="1"/><rect x="18" y="2" width="1" height="1"/><rect x="22" y="2" width="1" height="1"/><rect x="24" y="2" width="3" height="1"/><rect x="28" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="2" y="3" width="3" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="12" y="3" width="4" height="1"/><rect x="17" y="3" width="1" height="1"/><rect x="20" y="3" width="1" height="1"/><rect x="22" y="3" width="1" height="1"/><rect x="24" y="3" width="3" height="1"/><rect x="28" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="3" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="9" y="4" width="4" height="1"/><rect x="14" y="4" width="1" height="1"/><rect x="16" y="4" width="1" height="1"/><rect x="19" y="4" width="1" height="1"/><rect x="22" y="4" width="1" height="1"/><rect x="24" y="4" width="3" height="1"/><rect x="28" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="13" y="5" width="1" height="1"/><rect x="16" y="5" width="1" height="1"/><rect x="19" y="5" width="2" height="1"/><rect x="22" y="5" width="1" height="1"/><rect x="28" y="5" width="1" height="1"/><rect x="0" y="6" width="7" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="16" y="6" width="1" height="1"/><rect x="18" y="6" width="1" height="1"/><rect x="20" y="6" width="1" height="1"/><rect x="22" y="6" width="7" height="1"/><rect x="10" y="7" width="4" height="1"/><rect x="16" y="7" width="4" height="1"/><rect x="1" y="8" width="3" height="1"/><rect x="5" y="8" width="2" height="1"/><rect x="9" y="8" width="3" height="1"/><rect x="13" y="8" width="1" height="1"/><rect x="15" y="8" width="1" height="1"/><rect x="17" y="8" width="2" height="1"/><rect x="26" y="8" width="2" height="1"/><rect x="0" y="9" width="1" height="1"/><rect x="3" y="9" width="3" height="1"/><rect x="9" y="9" width="2" height="1"/><rect x="13" y="9" width="4" height="1"/><rect x="18" y="9" width="5" height="1"/><rect x="24" y="9" width="1" height="1"/><rect x="28" y="9" width="1" height="1"/><rect x="0" y="10" width="1" height="1"/><rect x="2" y="10" width="5" height="1"/><rect x="8" y="10" width="2" height="1"/><rect x="12" y="10" width="2" height="1"/><rect x="16" y="10" width="1" height="1"/><rect x="22" y="10" width="1" height="1"/><rect x="25" y="10" width="3" height="1"/><rect x="3" y="11" width="2" height="1"/><rect x="7" y="11" width="8" height="1"/><rect x="16" y="11" width="1" height="1"/><rect x="20" y="11" width="1" height="1"/><rect x="23" y="11" width="1" height="1"/><rect x="28" y="11" width="1" height="1"/><rect x="0" y="12" width="1" height="1"/><rect x="3" y="12" width="4" height="1"/><rect x="11" y="12" width="2" height="1"/><rect x="14" y="12" width="2" height="1"/><rect x="17" y="12" width="1" height="1"/><rect x="21" y="12" width="1" height="1"/><rect x="23" y="12" width="1" height="1"/><rect x="26" y="12" width="3" height="1"/><rect x="0" y="13" width="2" height="1"/><rect x="3" y="13" width="1" height="1"/><rect x="7" y="13" width="4" height="1"/><rect x="14" y="13" width="1" height="1"/><rect x="16" y="13" width="2" height="1"/><rect x="19" y="13" width="1" height="1"/><rect x="22" y="13" width="2" height="1"/><rect x="25" y="13" width="2" height="1"/><rect x="28" y="13" width="1" height="1"/><rect x="2" y="14" width="1" height="1"/><rect x="6" y="14" width="1" height="1"/><rect x="8" y="14" width="1" height="1"/><rect x="11" y="14" width="3" height="1"/><rect x="15" y="14" width="1" height="1"/><rect x="18" y="14" width="4" height="1"/><rect x="23" y="14" width="3" height="1"/><rect x="27" y="14" width="2" height="1"/><rect x="0" y="15" width="1" height="1"/><rect x="3" y="15" width="2" height="1"/><rect x="8" y="15" width="1" height="1"/><rect x="10" y="15" width="1" height="1"/><rect x="12" y="15" width="2" height="1"/><rect x="15" y="15" width="2" height="1"/><rect x="22" y="15" width="1" height="1"/><rect x="24" y="15" width="2" height="1"/><rect x="27" y="15" width="1" height="1"/><rect x="1" y="16" width="2" height="1"/><rect x="4" y="16" width="1" height="1"/><rect x="6" y="16" width="1" height="1"/><rect x="8" y="16" width="5" height="1"/><rect x="14" y="16" width="2" height="1"/><rect x="19" y="16" width="1" height="1"/><rect x="21" y="16" width="1" height="1"/><rect x="23" y="16" width="3" height="1"/><rect x="28" y="16" width="1" height="1"/><rect x="7" y="17" width="3" height="1"/><rect x="14" y="17" width="1" height="1"/><rect x="16" y="17" width="1" height="1"/><rect x="20" y="17" width="1" height="1"/><rect x="23" y="17" width="1" height="1"/><rect x="26" y="17" width="1" height="1"/><rect x="0" y="18" width="1" height="1"/><rect x="6" y="18" width="4" height="1"/><rect x="15" y="18" width="2" height="1"/><rect x="18" y="18" width="1" height="1"/><rect x="20" y="18" width="1" height="1"/><rect x="22" y="18" width="1" height="1"/><rect x="24" y="18" width="2" height="1"/><rect x="2" y="19" width="1" height="1"/><rect x="4" y="19" width="1" height="1"/><rect x="7" y="19" width="3" height="1"/><rect x="11" y="19" width="2" height="1"/><rect x="14" y="19" width="2" height="1"/><rect x="17" y="19" width="2" height="1"/><rect x="21" y="19" width="2" height="1"/><rect x="24" y="19" width="3" height="1"/><rect x="1" y="20" width="1" height="1"/><rect x="3" y="20" width="1" height="1"/><rect x="5" y="20" width="5" height="1"/><rect x="11" y="20" width="4" height="1"/><rect x="16" y="20" width="9" height="1"/><rect x="26" y="20" width="1" height="1"/><rect x="28" y="20" width="1" height="1"/><rect x="8" y="21" width="4" height="1"/><rect x="13" y="21" width="2" height="1"/><rect x="16" y="21" width="5" height="1"/><rect x="24" y="21" width="2" height="1"/><rect x="28" y="21" width="1" height="1"/><rect x="0" y="22" width="7" height="1"/><rect x="13" y="22" width="1" height="1"/><rect x="17" y="22" width="4" height="1"/><rect x="22" y="22" width="1" height="1"/><rect x="24" y="22" width="1" height="1"/><rect x="26" y="22" width="2" height="1"/><rect x="0" y="23" width="1" height="1"/><rect x="6" y="23" width="1" height="1"/><rect x="8" y="23" width="1" height="1"/><rect x="10" y="23" width="1" height="1"/><rect x="13" y="23" width="1" height="1"/><rect x="15" y="23" width="1" height="1"/><rect x="18" y="23" width="1" height="1"/><rect x="20" y="23" width="1" height="1"/><rect x="24" y="23" width="1" height="1"/><rect x="27" y="23" width="2" height="1"/><rect x="0" y="24" width="1" height="1"/><rect x="2" y="24" width="3" height="1"/><rect x="6" y="24" width="1" height="1"/><rect x="11" y="24" width="1" height="1"/><rect x="13" y="24" width="1" height="1"/><rect x="16" y="24" width="2" height="1"/><rect x="20" y="24" width="7" height="1"/><rect x="0" y="25" width="1" height="1"/><rect x="2" y="25" width="3" height="1"/><rect x="6" y="25" width="1" height="1"/><rect x="8" y="25" width="1" height="1"/><rect x="10" y="25" width="2" height="1"/><rect x="13" y="25" width="4" height="1"/><rect x="19" y="25" width="1" height="1"/><rect x="24" y="25" width="1" height="1"/><rect x="26" y="25" width="1" height="1"/><rect x="28" y="25" width="1" height="1"/><rect x="0" y="26" width="1" height="1"/><rect x="2" y="26" width="3" height="1"/><rect x="6" y="26" width="1" height="1"/><rect x="8" y="26" width="4" height="1"/><rect x="13" y="26" width="2" height="1"/><rect x="17" y="26" width="2" height="1"/><rect x="20" y="26" width="1" height="1"/><rect x="23" y="26" width="1" height="1"/><rect x="25" y="26" width="1" height="1"/><rect x="28" y="26" width="1" height="1"/><rect x="0" y="27" width="1" height="1"/><rect x="6" y="27" width="1" height="1"/><rect x="8" y="27" width="1" height="1"/><rect x="11" y="27" width="2" height="1"/><rect x="20" y="27" width="1" height="1"/><rect x="22" y="27" width="1" height="1"/><rect x="24" y="27" width="2" height="1"/><rect x="27" y="27" width="1" height="1"/><rect x="0" y="28" width="7" height="1"/><rect x="10" y="28" width="1" height="1"/><rect x="13" y="28" width="2" height="1"/><rect x="19" y="28" width="2" height="1"/><rect x="22" y="28" width="2" height="1"/><rect x="27" y="28" width="1" height="1"/></g></svg>';
+      function configuredQr() {
+        try {
+          var raw = localStorage.getItem('rb-newbie-admin-v3');
+          if (!raw) return '';
+          var data = JSON.parse(raw);
+          return data && data.qr ? String(data.qr) : '';
+        } catch (e) { return ''; }
+      }
+      function qrMarkup() {
+        var src = configuredQr();
+        return src ? '<img alt="客服二维码" src="' + esc(src) + '">' : DEMO_QR;
+      }
       document.getElementById('csOpen').onclick = function () {
-        dialog('<h3>新手专属客服</h3><p>领词、下载稿件或发布回填遇到问题，都可以联系我们。</p><div class="qr lg">客服二维码<br>后台已配置</div><button class="primary" id="csOk" type="button">我知道了</button>', function (d, close) {
+        var note = configuredQr() ? '扫码联系配跑客服' : '演示二维码 · 正式上线时替换为客服二维码';
+        dialog('<h3>新人专属配跑客服</h3><p class="cs-lead">陪你认识平台到变现，带你成长</p><div class="cs-qr-frame">' + qrMarkup() + '</div><p class="cs-qr-note">' + note + '</p><button class="primary" id="csOk" type="button">我知道了</button>', function (d, close) {
+          d.classList.add('cs-dialog');
           d.querySelector('#csOk').onclick = close;
         });
       };
       document.getElementById('csHide').onclick = function () {
-        try { localStorage.setItem('rb-newbie-cs-day', today()); } catch (e) {}
+        try { localStorage.setItem('rb-newbie-cs-v2', today()); } catch (e) {}
         paintCs();
         toast('今天不再显示，明天会再出现');
       };
@@ -530,7 +577,11 @@
       } else if (preset === 'step2') {
         state.stage = 1;
         state.project = 0;
-      } else if (preset === 'keyword' || preset === 'official') {
+      } else if (preset === 'keyword') {
+        state.stage = 1;
+        state.project = 0;
+        state.confirmed = true;
+      } else if (preset === 'official') {
         state.stage = 1;
         state.project = 0;
         state.assigned.zhihu = projects[0].keywords[0];

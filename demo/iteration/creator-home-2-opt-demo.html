@@ -1997,7 +1997,7 @@
 <button type="button" data-shortcut="org"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sgOrg" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#ffb089"/><stop offset="1" stop-color="#ff4a22"/></linearGradient></defs><circle cx="8.2" cy="8" r="2.5" fill="url(#sgOrg)"/><circle cx="15.6" cy="8.4" r="2.15" fill="url(#sgOrg)" opacity=".8"/><path fill="url(#sgOrg)" d="M3.6 18.2c.5-2.7 2.4-4 4.6-4s4.1 1.3 4.6 4v.6H3.6v-.6z"/><path fill="url(#sgOrg)" opacity=".75" d="M12.2 18.4c.4-2.2 2-3.4 3.8-3.4 1.7 0 3.2 1.1 3.7 3.2v.6h-7.5v-.4z"/></svg></span><span>社群中心</span></button>
 <button type="button" data-shortcut="invite"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sgInvite" x1="4" y1="3" x2="20" y2="21" gradientUnits="userSpaceOnUse"><stop stop-color="#ff9a70"/><stop offset="1" stop-color="#ff3414"/></linearGradient></defs><circle cx="9.2" cy="8.2" r="2.7" fill="url(#sgInvite)"/><path fill="url(#sgInvite)" d="M3.8 18.4c.6-2.8 2.5-4.3 5.4-4.3s4.8 1.5 5.4 4.3v.6H3.8v-.6z"/><circle cx="17.5" cy="7.4" r="3.5" fill="#fff"/><path d="M17.5 5.6v3.6M15.7 7.4h3.6" stroke="url(#sgInvite)" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></span><span>邀请好友</span></button>
 </div>
-<script src="shortcut-grid-config.js?v=5"></script>
+<script src="shortcut-grid-config.js?v=10"></script>
 <div class="section stats">
 <div class="stats-grid">
 <div class="stat"><div class="label">今日预计收益</div><b>829.23</b><small>较昨日 <span style="color:#ff684a">上涨18%</span></small></div>
@@ -7418,6 +7418,74 @@ renderCats();
    bootAdmin(host.shadowRoot);
  }
  boot();
+})();
+</script>
+<style id="academy-cs-bar">
+#academyCs{position:absolute;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:70;padding-top:10px}
+#academyCs[hidden]{display:none!important}
+#academyCs .cs-card{position:relative;display:flex;align-items:center;gap:10px;padding:12px;background:#fff4e8;border-radius:16px;box-shadow:0 8px 22px rgba(255,122,64,.14),0 1px 3px rgba(40,24,12,.05)}
+#academyCs .cs-icon{width:40px;height:40px;flex:none;border-radius:50%;background:#fa6034;display:grid;place-items:center}
+#academyCs .cs-copy{flex:1;min-width:0;text-align:left}
+#academyCs .cs-copy strong{display:block;font-size:14px;font-weight:700;line-height:1.25;color:#2b3038}
+#academyCs .cs-copy small{display:block;margin-top:3px;color:#8e95a1;font-size:11px;line-height:1.35}
+#academyCs .cs-cta{flex:none;border:0;background:#fa6034;color:#fff;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;line-height:1.2;white-space:nowrap}
+#academyCs .cs-x{position:absolute;top:-9px;right:2px;width:20px;height:20px;padding:0;border:0;border-radius:50%;background:#fff;color:#b0b6c0;font-size:14px;line-height:18px;box-shadow:0 1px 4px rgba(20,24,32,.16)}
+#academyCsMask{position:absolute;inset:0;z-index:80;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:18px}
+#academyCsMask[hidden]{display:none!important}
+#academyCsMask .cs-dialog{width:min(320px,100%);background:#fff;color:#262a32;border-radius:22px;padding:26px 20px 18px;text-align:center}
+#academyCsMask h3{margin:0;font-size:18px;font-weight:700}
+#academyCsMask .cs-lead{margin:8px 0 18px;font-size:13px;color:#8d95a6}
+#academyCsMask .cs-qr-frame{width:196px;margin:0 auto;padding:12px;border:1px solid #e8ebf0;border-radius:16px;background:#f7f8fa}
+#academyCsMask .cs-qr-frame svg{width:168px;height:168px;display:block}
+#academyCsMask .cs-qr-note{margin:14px 0 16px;font-size:12px;color:#a4aab6}
+#academyCsMask .cs-ok{width:100%;border:0;border-radius:12px;padding:13px;background:#fa6034;color:#fff;font-size:16px;font-weight:600}
+#academyCenterPage.active .academy-body,#academyCourseDetailPage.active .acd-scroll{padding-bottom:108px}
+</style>
+<script id="academy-cs-bar-script">
+(function () {
+  var phone = document.querySelector('.phone');
+  if (!phone || document.getElementById('academyCs')) return;
+  var qr = '<svg viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="29" height="29" fill="#fff"/><g fill="#1a2332"><rect x="0" y="0" width="7" height="1"/><rect x="22" y="0" width="7" height="1"/><rect x="0" y="6" width="7" height="1"/><rect x="22" y="6" width="7" height="1"/><rect x="0" y="22" width="7" height="1"/><rect x="0" y="28" width="7" height="1"/><rect x="2" y="2" width="3" height="1"/><rect x="2" y="3" width="3" height="1"/><rect x="2" y="4" width="3" height="1"/><rect x="24" y="2" width="3" height="1"/><rect x="24" y="3" width="3" height="1"/><rect x="24" y="4" width="3" height="1"/><rect x="2" y="24" width="3" height="1"/><rect x="2" y="25" width="3" height="1"/><rect x="2" y="26" width="3" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="22" y="1" width="1" height="1"/><rect x="28" y="1" width="1" height="1"/><rect x="22" y="5" width="1" height="1"/><rect x="28" y="5" width="1" height="1"/><rect x="0" y="23" width="1" height="1"/><rect x="6" y="23" width="1" height="1"/><rect x="0" y="27" width="1" height="1"/><rect x="6" y="27" width="1" height="1"/><rect x="10" y="1" width="6" height="1"/><rect x="9" y="8" width="3" height="1"/><rect x="13" y="9" width="4" height="1"/><rect x="16" y="20" width="9" height="1"/><rect x="8" y="16" width="5" height="1"/><rect x="11" y="14" width="3" height="1"/><rect x="18" y="14" width="4" height="1"/><rect x="10" y="28" width="1" height="1"/><rect x="13" y="28" width="2" height="1"/><rect x="19" y="28" width="2" height="1"/><rect x="22" y="28" width="2" height="1"/></g></svg>';
+  var bar = document.createElement('div');
+  bar.id = 'academyCs';
+  bar.hidden = true;
+  bar.innerHTML = '<div class="cs-card"><button class="cs-x" type="button" aria-label="关闭客服栏">×</button><span class="cs-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" d="M4.8 12.2V11a7.2 7.2 0 0 1 14.4 0v1.2"/><rect x="3" y="11.5" width="4.2" height="6.4" rx="1.6" fill="#fff"/><rect x="16.8" y="11.5" width="4.2" height="6.4" rx="1.6" fill="#fff"/><path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M17.4 17.7c.2 1.5-1.2 2.6-3.1 2.6h-1.2"/></svg></span><span class="cs-copy"><strong>新人专属配跑客服</strong><small>领词、下载、发布回填，有问题随时问</small></span><button class="cs-cta" type="button">联系客服</button></div>';
+  var mask = document.createElement('div');
+  mask.id = 'academyCsMask';
+  mask.hidden = true;
+  mask.innerHTML = '<div class="cs-dialog" role="dialog" aria-modal="true"><h3>新人专属配跑客服</h3><p class="cs-lead">陪你认识平台到变现，带你成长</p><div class="cs-qr-frame">' + qr + '</div><p class="cs-qr-note">演示二维码 · 正式上线时替换为客服二维码</p><button class="cs-ok" type="button">我知道了</button></div>';
+  phone.appendChild(bar);
+  phone.appendChild(mask);
+  function today() {
+    var d = new Date();
+    return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+  }
+  function dismissed() {
+    try { return localStorage.getItem('rb-academy-cs-day') === today(); } catch (e) { return false; }
+  }
+  function academyOn() {
+    var center = document.getElementById('academyCenterPage');
+    var detail = document.getElementById('academyCourseDetailPage');
+    return (center && center.classList.contains('active')) || (detail && detail.classList.contains('active'));
+  }
+  function paint() {
+    bar.hidden = dismissed() || !academyOn();
+  }
+  bar.querySelector('.cs-cta').onclick = function () { mask.hidden = false; };
+  bar.querySelector('.cs-x').onclick = function () {
+    try { localStorage.setItem('rb-academy-cs-day', today()); } catch (e) {}
+    mask.hidden = true;
+    paint();
+    if (window.__academyToast) window.__academyToast('今天不再显示，明天会再出现');
+  };
+  mask.querySelector('.cs-ok').onclick = function () { mask.hidden = true; };
+  mask.addEventListener('click', function (e) { if (e.target === mask) mask.hidden = true; });
+  ['academyCenterPage', 'academyCourseDetailPage'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    new MutationObserver(paint).observe(el, { attributes: true, attributeFilter: ['class'] });
+  });
+  paint();
 })();
 </script>
 </body>

@@ -2,7 +2,7 @@
 name: 右豹创作者 2.0
 description: C 端创作者 App（V125）与学院后台的视觉 token；橙系营销感 + 数据 Tab 克制黑金。
 status: final
-updated: 2026-10-10
+updated: 2026-10-11
 topic: 2.0优化
 sources:
   - mockups/creator-home-2-opt-demo.html
@@ -155,6 +155,12 @@ components:
 
 - 图标 44×44；主标题 13px/800；收益 `{colors.brand-orange}` em 强调；**推荐工具** 为卡片底部分割行（V34/V35），chip 用 `{components.project-tool-chip}`。
 
+### 新手学院客服悬浮栏
+
+- 暖杏底 `#fff4e8`，圆角 16px，浮在内容之上，左右留白，不做成贴底通栏。
+- 耳机圆标与「联系客服」胶囊用 `{colors.brand-orange}`。标题 `#2b3038`，说明 `#8e95a1`。
+- 关闭是白圆灰叉，叠在卡片右上角。点开后的二维码弹层白底、大圆角，主按钮同品牌橙。
+
 ### 工具 Bottom Sheet
 
 - 顶 drag bar `{components.tool-bottom-sheet.dragHandle}`；选项行 + 「去使用」橙钮；**tool-reason** 块必填样式。
@@ -176,3 +182,4 @@ components:
 - **Don't** 把金刚区图标做成正圆细线符号。
 - **Don't** 在首页放路径气泡，或把学习卡标题写成「新手学院」。
 - **Don't** 在首页放「有邀请码？」或「绑定邀请码」。
+- **Don't** 把新手学院客服做成贴底通栏，或在栏上直接铺二维码缩略图。
