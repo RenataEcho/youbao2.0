@@ -155,6 +155,18 @@
     .remind-label { margin: 0 0 4px; font-size: 12px; color: var(--muted); }
     .remind-text { margin: 0 0 12px; font-size: 13px; line-height: 1.6; color: #1a2332; white-space: pre-wrap; }
     .remind-text:last-child { margin-bottom: 0; }
+    .tip-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+    .tip-h .tip-label { font-size: 14px; font-weight: 700; color: #222; }
+    .tip-h button { border: none; background: var(--orange-light); color: var(--orange); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; cursor: pointer; }
+    #pubTips .tip-box { width: 100%; min-height: 88px; padding: 10px 12px; border: 1px solid #eee; border-radius: 8px; font: inherit; font-size: 14px; line-height: 1.55; resize: none; background: #fafafa; color: #222; box-sizing: border-box; }
+    .notice { margin: 0 0 4px; padding: 12px 12px 10px; border-radius: 12px; background: #fff7f0; border: 1px solid #ffe0c7; }
+    .notice-h { display: flex; align-items: center; gap: 6px; color: var(--orange); font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .notice-h i { width: 16px; height: 16px; border-radius: 50%; background: var(--orange); color: #fff; font-style: normal; font-size: 11px; display: flex; align-items: center; justify-content: center; }
+    .notice-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; text-align: center; }
+    .notice-ico { width: 28px; height: 28px; margin: 0 auto 6px; border-radius: 50%; background: #ffe8d4; color: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 13px; }
+    .notice-grid p { font-size: 11px; line-height: 1.4; color: #4b5563; font-weight: 600; }
+    .notice-lead { margin: 0 0 10px; font-size: 12px; line-height: 1.55; color: #7c2d12; text-align: left; }
+    .notice-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid #ffe0c7; font-size: 11px; color: #6b7280; text-align: center; line-height: 1.45; }
     .kw-mask { position: absolute; inset: 0; background: rgba(20,24,32,.4); z-index: 70; display: none; }
     .kw-mask.show { display: block; }
     .kw-sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 71; display: none; background: #fff; border-radius: 16px 16px 0 0; max-height: 78%; flex-direction: column; overflow: hidden; }
@@ -896,17 +908,16 @@
       var any = w.got.some(Boolean);
       var all = !left.length;
       var extra = listMat ? episodeExtra(w) : '';
-      if (!any) extra += detailGuide(w);
-      var foot = '<div class="foot"><div class="foot-claim' + (all && back === 'claims' ? ' foot-done' : '') + '">';
+      extra += detailGuide(w);
+      if (any) extra += publishTipsCard(w) + noticeHtml();
+      var foot = '<div class="foot"><div class="foot-claim' + (all ? ' foot-done' : '') + '">';
       if (!all) {
         foot += '<div class="quota-chip"><span>剩余次数</span><b>' + quotaLeft + '</b></div>' +
           '<button class="btn-tip" type="button" id="quickKw">快捷提词</button>' +
           '<button class="btn-primary" type="button" id="openMode">领取稿件</button>';
-      } else if (back === 'claims') {
+      } else {
         foot += '<button class="btn-ghost" type="button" id="wmBtn">添加水印</button>' +
           '<button class="btn-primary" type="button" id="dyPublish">下载并发布到抖音</button>';
-      } else {
-        foot += '<p class="foot-note">这条稿件已领取，再次下载请到已领记录。</p>';
       }
       foot += '</div></div>';
       var overlay = '';
@@ -935,6 +946,27 @@
         '<button type="button" data-dtab="steps"' + (onRemind ? '' : ' class="on"') + '>领取步骤</button>' +
         '<button type="button" data-dtab="remind"' + (onRemind ? ' class="on"' : '') + '>剪辑师提醒</button></div>' +
         (onRemind ? remind : steps) + '</div>';
+    }
+    function publishTipText(w) {
+      if (w.pubTips) return w.pubTips;
+      var book = String(w.book || '本书').replace(/\s/g, '').slice(0, 8);
+      var title = String(w.title || '成片').replace(/\s/g, '').slice(0, 8);
+      return '发布「' + w.title + '」时写明书名「' + w.book + '」，只根据书和成片已有内容写一段，不另编情节。#' + book + ' #' + title;
+    }
+    function publishTipsCard(w) {
+      return '<div class="card" id="pubTips"><div class="tip-h"><span class="tip-label" id="pubTipsLabel">发布技巧</span><button type="button" id="copyTips" aria-label="复制发布技巧">复制</button></div>' +
+        '<textarea class="tip-box" readonly aria-labelledby="pubTipsLabel">' + esc(publishTipText(w)) + '</textarea></div>';
+    }
+    function noticeHtml() {
+      return '<div class="notice" id="detailNotice">' +
+        '<div class="notice-h"><i>!</i>注意事项</div>' +
+        '<p class="notice-lead">为确保作品收益分成准确，每个关键词仅可领取一个作品。领取前请确认作品信息，感谢您的理解与配合。</p>' +
+        '<div class="notice-grid">' +
+        '<div><div class="notice-ico">日</div><p>24小时内<br/>完成发布</p></div>' +
+        '<div><div class="notice-ico">链</div><p>未按时回填<br/>任务失效</p></div>' +
+        '<div><div class="notice-ico">禁</div><p>终身未回填超过3次<br/>将禁止领取</p></div>' +
+        '</div>' +
+        '<p class="notice-foot">请遵守平台规则发布，禁止违规内容，否则收益将被取消</p></div>';
     }
     function editorRule(w) {
       return EDITOR_FEE[w.editor] || { charge: 'platform' };
@@ -2060,6 +2092,15 @@
       if (wmBtn) wmBtn.onclick = function () {
         var w = findWork(currentId);
         toast(w.kw === 'platform' ? '帐号运营稿件不支持添加水印' : '当前稿件不支持添加水印');
+      };
+      var copyTips = document.getElementById('copyTips');
+      if (copyTips) copyTips.onclick = function () {
+        var w = findWork(currentId);
+        var txt = publishTipText(w);
+        if (!txt) { toast('暂无发布技巧'); return; }
+        var done = function () { toast('已复制发布技巧'); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, done);
+        else done();
       };
       document.querySelectorAll('[data-tproj]').forEach(function (el) {
         el.addEventListener('click', function () { editorProject = el.getAttribute('data-tproj'); draw(); });
