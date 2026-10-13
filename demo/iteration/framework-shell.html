@@ -281,10 +281,10 @@
         <span><a href="fr-yijian-daifa-iter3.html">一键代发迭代 3.0</a></span>
         <span class="badge badge-template">B + A</span>
         <span class="badge badge-version">v1</span>
-        <label class="status-select-wrap badge-status-todo">
+        <label class="status-select-wrap badge-status-dev">
           <select class="status-select" data-fr="FR-020" aria-label="调整 FR-020 状态">
-            <option value="todo" selected>待开始</option>
-            <option value="dev">开发中</option>
+            <option value="todo">待开始</option>
+            <option value="dev" selected>开发中</option>
             <option value="live">已上线</option>
             <option value="paused">已暂停</option>
           </select>
@@ -572,12 +572,12 @@
       </div>
     </div>
   </main>
-  <script src="sidebar-nav.js?v=sprint1009b"></script>
+  <script src="sidebar-nav.js?v=sprint1013"></script>
   <script>
     (function () {
       var STORAGE_KEY = 'ybdd-sprint-fr-status';
       var REV_KEY = 'ybdd-sprint-fr-status-rev';
-      var STATUS_REV = '2026-10-09';
+      var STATUS_REV = '2026-10-13';
       var STATUS = {
         todo: { label: '待开始', cls: 'badge-status-todo', color: '#64748b' },
         dev: { label: '开发中', cls: 'badge-status-dev', color: '#0891b2' },
