@@ -2,7 +2,7 @@
   var STORAGE_KEY = 'iteration-sidebar-groups';
   var STATUS_STORAGE_KEY = 'ybdd-sprint-fr-status';
   var STATUS_REV_KEY = 'ybdd-sprint-fr-status-rev';
-  var STATUS_REV = '2026-10-09';
+  var STATUS_REV = '2026-10-13';
   var COLLAPSE_STORAGE_KEY = 'iteration-sidebar-collapsed';
   var COLLAPSED_CLASS = 'sidebar-collapsed';
 
@@ -67,7 +67,7 @@
         { id: 'fr-opc-yijian-daifa-pool', label: '收益池与限时领次', href: 'fr-opc-yijian-daifa-pool.html', fr: 'FR-017', defaultStatus: 'paused' },
         { id: 'fr-yijian-daifa-iter2', label: '一键代发迭代 2.0', href: 'fr-yijian-daifa-iter2.html', fr: 'FR-018', defaultStatus: 'live' },
         { id: 'fr-alias-bind', label: '别名绑定', href: 'fr-alias-bind.html', fr: 'FR-019', defaultStatus: 'dev' },
-        { id: 'fr-yijian-daifa-iter3', label: '一键代发迭代 3.0', href: 'fr-yijian-daifa-iter3.html', fr: 'FR-020', defaultStatus: 'todo' },
+        { id: 'fr-yijian-daifa-iter3', label: '一键代发迭代 3.0', href: 'fr-yijian-daifa-iter3.html', fr: 'FR-020', defaultStatus: 'dev' },
         { id: 'fr-creator-home-2-opt', label: '2.0优化', href: 'fr-creator-home-2-opt.html', fr: 'FR-021', defaultStatus: 'todo' }
       ]
     },

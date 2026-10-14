@@ -179,17 +179,6 @@
     .sec-title { font-size: 16px; font-weight: 800; margin: 4px 4px 12px; }
     .sec-head { margin: 4px 4px 12px; }
     .sec-head .sec-title { margin: 0 0 4px; }
-    .rec-head {
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      margin: 4px 4px 12px;
-    }
-    .rec-head .sec-title { margin: 0; flex-shrink: 0; }
-    .wd-kind {
-      height: 32px; border: 1px solid #ececec; border-radius: 8px; padding: 0 8px;
-      font-size: 13px; font-weight: 700; background: #fff; color: #1c2430;
-    }
-    .rec-sum-line { margin: -6px 4px 12px; font-size: 12px; color: #8b93a0; }
-    .rec-sum-line b { display: block; margin-top: 2px; font-size: 20px; font-weight: 800; color: #111; }
     .sec-hint { font-size: 12px; color: #9aa3af; font-weight: 400; line-height: 1.45; }
     .rec { background: #fff; border-radius: 16px; padding: 16px 14px; margin-bottom: 10px; }
     .rec-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
@@ -478,7 +467,6 @@
         incomeWallet: 'project',
         detailScope: 'wallet',
         detailTab: 'income',
-        wdKindFilter: 'all',
         records: [
           { title: '提现到建设银行**** 8135', amt: 80.09, tax: 0, id: '202609201546008813501', apply: '2026.09.20 15:46:00', paid: '2026.09.20 16:10:00', split: { project: 0, team: 0, activity: 0, unified: 80.09 }, userName: '张三', userNo: '3301**********1234', cert: 'id1', payType: 'personal', status: 'paid' },
           { title: '提现到对公账户', amt: 15.00, tax: 0, id: '202609181030002X', apply: '2026.09.18 10:30:00', paid: '2026.09.18 11:05:00', split: { project: 0, team: 0, activity: 0, unified: 15.00 }, userName: '杭州右豹文化传媒有限公司', userNo: '913301**********2X', cert: 'id3', payType: 'corp', status: 'paid' },
@@ -698,21 +686,17 @@
       var c = certByKey(r && r.cert);
       return c && c.type === 'corp' ? 'corp' : 'personal';
     }
-    function filterWdKind(rows) {
-      var kind = S.wdKindFilter || 'all';
-      if (kind === 'all') return rows;
-      return rows.filter(function (r) { return recordPayKind(r) === kind; });
-    }
-    function summaryWdHead(rows) {
-      var kind = S.wdKindFilter || 'all';
-      function opt(value, label) {
-        return '<option value="' + value + '"' + (kind === value ? ' selected' : '') + '>' + label + '</option>';
+    function mergedWdStats() {
+      var all = mergedRecords();
+      function sumKind(kind) {
+        return successWdSum(all.filter(function (r) {
+          return kind === 'all' ? true : recordPayKind(r) === kind;
+        }));
       }
-      return '<div class="rec-head"><div class="sec-title">提现记录</div>' +
-        '<select class="wd-kind" data-act="wd-kind" aria-label="筛选提现方式">' +
-        opt('all', '全部') + opt('personal', '个人') + opt('corp', '对公') +
-        '</select></div>' +
-        '<div class="rec-sum-line">累计成功提现金额<b>' + money(successWdSum(rows)) + '</b></div>';
+      return '<div class="stat-3">' +
+        '<div><div class="k">累计提现 ' + tipIcon('wd-total') + '</div><div class="v">' + money(sumKind('all')) + '</div></div>' +
+        '<div><div class="k">个人提现 ' + tipIcon('wd-personal') + '</div><div class="v">' + money(sumKind('personal')) + '</div></div>' +
+        '<div><div class="k">对公提现 ' + tipIcon('wd-corp') + '</div><div class="v">' + money(sumKind('corp')) + '</div></div></div>';
     }
     function splitAmount(amt) {
       var left = r2(amt);
@@ -838,7 +822,9 @@
         noticeSlot(COPY.withdrawFoot) + '</div>';
     }
     var STAT_TIPS = {
-      'wd-total': { title: '累计提现', text: '本页累计已成功发起的提现金额。' },
+      'wd-total': { title: '累计提现', text: '合并提现后新数据：已成功发起的提现金额合计。' },
+      'wd-personal': { title: '个人提现', text: '个人实名账户发起的、已成功提现的金额合计（合并后新数据）。' },
+      'wd-corp': { title: '对公提现', text: '对公账户发起的、已成功提现的金额合计（合并后新数据）。' },
       'tf-total': { title: '累计已划转', text: '各钱包划出金额合计（税前）。' },
       'tf-net': { title: '实际到账', text: '划转应税成功后进入所选实名账户可提现的金额。' },
       'tf-tax': { title: '预扣税额', text: '划转时按国税要求扣除的税额合计。扣税中、失败单不计入实际到账。' },
@@ -933,9 +919,9 @@
         '<button type="button" class="' + (tab === 'withdraw' ? 'active' : '') + '" data-act="records-tab" data-tab="withdraw">提现明细</button></div>';
       var body;
       if (tab === 'withdraw') {
-        var merged = filterWdKind(mergedRecords());
-        body = summaryWdHead(merged) +
-          '<p class="sec-hint" style="margin:-4px 4px 12px">合并后新数据。旧记录仍在各钱包「查看明细」的提现明细中。</p>' +
+        var merged = mergedRecords();
+        body = mergedWdStats() +
+          '<p class="sec-hint" style="margin:0 4px 12px">合并后新数据。旧记录仍在各钱包「查看明细」的提现明细中。</p>' +
           wdRecordBlock(merged);
       } else {
         body = tfStats(S.transfers) +
@@ -985,9 +971,10 @@
         '<button type="button" class="' + (tab === 'withdraw' ? 'active' : '') + '" data-act="detail-tab" data-tab="withdraw">提现明细</button></div>';
       var body;
       if (tab === 'withdraw') {
-        var wdRows = summary ? filterWdKind(mergedRecords()) : recordsForWallet(w.id);
+        var wdRows = summary ? mergedRecords() : recordsForWallet(w.id);
         var head = summary
-          ? summaryWdHead(wdRows)
+          ? mergedWdStats() +
+            '<p class="sec-hint" style="margin:0 4px 12px">合并后新数据。旧记录仍在各钱包「查看明细」的提现明细中。</p>'
           : walletWdStats(wdRows) +
             '<div class="sec-head"><div class="sec-title">提现记录</div>' +
             '<p class="sec-hint">以下数据为该钱包的提现记录。</p></div>';
@@ -1222,14 +1209,6 @@
       toast('账本已重置');
       showScreen('home');
     }
-    document.querySelector('.phone-frame').addEventListener('change', function (e) {
-      var sel = e.target.closest('select[data-act="wd-kind"]');
-      if (!sel) return;
-      S.wdKindFilter = sel.value || 'all';
-      var active = document.querySelector('.screen.active');
-      if (!active) return;
-      showScreen(active.id.replace('screen-', ''));
-    });
     document.querySelector('.phone-frame').addEventListener('click', function (e) {
       if (e.target.id === 'kycMask' || e.target.id === 'noticeMask') return;
       if (e.target.id === 'tipMask') {
