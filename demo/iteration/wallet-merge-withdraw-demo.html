@@ -703,7 +703,7 @@
       if (kind === 'all') return rows;
       return rows.filter(function (r) { return recordPayKind(r) === kind; });
     }
-    function summaryWdHead(rows) {
+    function summaryWdHead() {
       var kind = S.wdKindFilter || 'all';
       function opt(value, label) {
         return '<option value="' + value + '"' + (kind === value ? ' selected' : '') + '>' + label + '</option>';
@@ -711,8 +711,19 @@
       return '<div class="rec-head"><div class="sec-title">提现记录</div>' +
         '<select class="wd-kind" data-act="wd-kind" aria-label="筛选提现方式">' +
         opt('all', '全部') + opt('personal', '个人') + opt('corp', '对公') +
-        '</select></div>' +
-        '<div class="rec-sum-line">累计成功提现金额<b>' + money(successWdSum(rows)) + '</b></div>';
+        '</select></div>';
+    }
+    function mergedWdStats() {
+      var all = mergedRecords();
+      function sumKind(kind) {
+        return successWdSum(all.filter(function (r) {
+          return kind === 'all' ? true : recordPayKind(r) === kind;
+        }));
+      }
+      return '<div class="stat-3">' +
+        '<div><div class="k">累计提现 ' + tipIcon('wd-total') + '</div><div class="v">' + money(sumKind('all')) + '</div></div>' +
+        '<div><div class="k">个人提现 ' + tipIcon('wd-personal') + '</div><div class="v">' + money(sumKind('personal')) + '</div></div>' +
+        '<div><div class="k">对公提现 ' + tipIcon('wd-corp') + '</div><div class="v">' + money(sumKind('corp')) + '</div></div></div>';
     }
     function splitAmount(amt) {
       var left = r2(amt);
@@ -838,7 +849,9 @@
         noticeSlot(COPY.withdrawFoot) + '</div>';
     }
     var STAT_TIPS = {
-      'wd-total': { title: '累计提现', text: '本页累计已成功发起的提现金额。' },
+      'wd-total': { title: '累计提现', text: '合并提现后新数据：已成功发起的提现金额合计。' },
+      'wd-personal': { title: '个人提现', text: '个人实名账户发起的、已成功提现的金额合计（合并后新数据）。' },
+      'wd-corp': { title: '对公提现', text: '对公账户发起的、已成功提现的金额合计（合并后新数据）。' },
       'tf-total': { title: '累计已划转', text: '各钱包划出金额合计（税前）。' },
       'tf-net': { title: '实际到账', text: '划转应税成功后进入所选实名账户可提现的金额。' },
       'tf-tax': { title: '预扣税额', text: '划转时按国税要求扣除的税额合计。扣税中、失败单不计入实际到账。' },
@@ -934,9 +947,9 @@
       var body;
       if (tab === 'withdraw') {
         var merged = filterWdKind(mergedRecords());
-        body = summaryWdHead(merged) +
-          '<p class="sec-hint" style="margin:-4px 4px 12px">合并后新数据。旧记录仍在各钱包「查看明细」的提现明细中。</p>' +
-          wdRecordBlock(merged);
+        body = mergedWdStats() +
+          '<p class="sec-hint" style="margin:0 4px 12px">合并后新数据。旧记录仍在各钱包「查看明细」的提现明细中。</p>' +
+          summaryWdHead() + wdRecordBlock(merged);
       } else {
         body = tfStats(S.transfers) +
           '<div class="sec-head"><div class="sec-title">划转记录</div>' +
@@ -987,7 +1000,9 @@
       if (tab === 'withdraw') {
         var wdRows = summary ? filterWdKind(mergedRecords()) : recordsForWallet(w.id);
         var head = summary
-          ? summaryWdHead(wdRows)
+          ? mergedWdStats() +
+            '<p class="sec-hint" style="margin:0 4px 12px">合并后新数据。旧记录仍在各钱包「查看明细」的提现明细中。</p>' +
+            summaryWdHead()
           : walletWdStats(wdRows) +
             '<div class="sec-head"><div class="sec-title">提现记录</div>' +
             '<p class="sec-hint">以下数据为该钱包的提现记录。</p></div>';
