@@ -438,7 +438,7 @@
         });
       }
       function renderService() {
-        document.getElementById('content').innerHTML = '<div class="pagehead"><div><h1>客服</h1><p>只配置一张二维码。C 端底部客服栏和「官方稿件已经领完」弹窗用的是同一张。</p></div></div><div class="sheet"><div class="qr" id="qrBox">' + (data.qr ? '<img alt="客服二维码" src="' + esc(data.qr) + '">' : '尚未上传<br>客服二维码') + '</div><div class="field" style="margin-top:14px"><label>更换二维码</label><input id="qrFile" type="file" accept="image/png,image/jpeg,image/webp"></div><div class="micro">png / jpg / webp。换图后两处一起更新。</div><div class="actions"><button class="primary" id="saveQr" type="button">保存</button></div></div>';
+        document.getElementById('content').innerHTML = '<div class="pagehead"><div><h1>客服</h1><p>只配置一张二维码。C 端悬浮客服栏和「官方稿件已经领完」弹窗用的是同一张。</p></div></div><div class="sheet"><div class="qr" id="qrBox">' + (data.qr ? '<img alt="客服二维码" src="' + esc(data.qr) + '">' : '尚未上传<br>客服二维码') + '</div><div class="field" style="margin-top:14px"><label>更换二维码</label><input id="qrFile" type="file" accept="image/png,image/jpeg,image/webp"></div><div class="micro">png / jpg / webp。换图后两处一起更新。</div><div class="actions"><button class="primary" id="saveQr" type="button">保存</button></div></div>';
         var pending = data.qr;
         document.getElementById('qrFile').onchange = function () {
           var file = this.files && this.files[0];
